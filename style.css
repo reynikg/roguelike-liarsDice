@@ -1,0 +1,193 @@
+:root {
+  --table-dark: #1a0f00;
+  --table-warm: #3d260a;
+  --text-main: #f5eadd;
+  --text-highlight: #d4af37;
+  --die-bg: #fdfdfc;
+  --die-dot: #111;
+  --font-serif: 'Crimson Text', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-serif);
+  background-color: var(--table-dark);
+  color: var(--text-main);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-image: 
+    radial-gradient(circle at center, rgba(61, 38, 10, 0.4) 0%, rgba(0,0,0,0.8) 100%),
+    url('https://www.transparenttextures.com/patterns/dark-wood.png'); 
+  background-attachment: fixed;
+}
+
+.table-vignette {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 110%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.game-scene {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 900px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2vh 0;
+  transition: filter 2s ease; /* For the fade out */
+}
+
+header { text-align: center; margin-bottom: 2vh; }
+header h1 {
+  font-weight: 700; font-size: 2.5rem; text-transform: uppercase;
+  letter-spacing: 0.2rem; color: var(--text-highlight);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.bank-amount {
+  font-weight: 700;
+  color: #4ade80;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px rgba(74, 222, 128, 0.4);
+}
+
+.section {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px; padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+}
+.section-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1rem; border-bottom: 1px solid rgba(245, 234, 221, 0.1);
+  padding-bottom: 0.5rem;
+}
+.section-header h2 { font-size: 1.2rem; font-weight: 600; color: #ccc; }
+.dice-count { font-weight: 700; color: var(--text-highlight); }
+
+.center-stage {
+  flex-grow: 1; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; margin: 2vh 0; text-align: center;
+}
+.bid-display h3 { font-size: 1rem; color: #aaa; margin-bottom: 0.5rem; }
+.bid-visual {
+  font-size: 2.5rem; font-weight: 700; color: var(--text-highlight);
+  background: rgba(212, 175, 55, 0.1); padding: 0.5rem 1.5rem;
+  border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+.bid-visual.new-bid { animation: popIn 0.4s ease-out; }
+.bid-visual.empty { color: #555; border-color: #333; }
+#game-message { font-size: 1.2rem; font-weight: 600; max-width: 80%; margin-top: 1rem; }
+
+.control-panel {
+  background: #2a1b0c; border: 2px solid var(--text-highlight);
+  border-radius: 8px 8px 0 0; padding: 1rem;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.6); margin-top: auto;
+}
+
+/* Wager Styles */
+.wager-section {
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 1.5rem; padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+}
+.wager-section label { font-size: 0.8rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.5rem; }
+.wager-inputs { display: flex; align-items: center; gap: 0.5rem; }
+.currency { font-size: 1.2rem; color: var(--text-highlight); font-weight: bold; }
+.btn-soul { background: #4a0000; color: #ff8888; border: 1px solid #ff4444; box-shadow: 0 0 10px rgba(255,0,0,0.2); }
+.btn-soul:hover { background: #660000; color: white; }
+
+.bid-inputs { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+.input-group { display: flex; flex-direction: column; align-items: flex-start; }
+.input-group label { font-size: 0.8rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.2rem; }
+input[type="number"], select {
+  font-family: var(--font-serif); background: #111; color: var(--text-main);
+  border: 1px solid #444; padding: 0.5rem; font-size: 1.1rem; border-radius: 4px; width: 100px;
+}
+input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.action-buttons { display: flex; justify-content: center; gap: 1rem; }
+button {
+  font-family: var(--font-serif); font-weight: 700; text-transform: uppercase;
+  padding: 0.6rem 1.5rem; font-size: 1rem; border: none; border-radius: 4px;
+  cursor: pointer; transition: all 0.2s ease;
+}
+button:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); }
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary { background: #8b4513; color: white; box-shadow: 0 4px 0 #5d2e0d; }
+.btn-danger { background: #8b0000; color: white; box-shadow: 0 4px 0 #5a0000; }
+.btn-success { background: #228b22; color: white; box-shadow: 0 4px 0 #145514; }
+
+/* Dice Styles & Fix */
+.dice-hand, .dice-cup { display: flex; justify-content: center; gap: 10px; min-height: 50px; }
+.die {
+  width: 40px; height: 40px; background: var(--die-bg); border-radius: 6px;
+  box-shadow: 2px 3px 5px rgba(0,0,0,0.6), inset -2px -2px 3px rgba(0,0,0,0.2);
+  display: flex; justify-content: center; align-items: center;
+  font-size: 1.6rem; font-weight: 800; color: var(--die-dot);
+  transform-style: preserve-3d;
+}
+.dice-cup .die { background: #444; color: transparent; border: 1px solid #222; }
+
+/* The fix: target the inner span to counter-rotate */
+.dice-cup .die.revealed .die-content {
+  transform: rotateY(180deg);
+  display: block;
+}
+
+@keyframes shakeRoll {
+  0%, 100% { transform: translate(1px, -2px) rotate(-10deg); }
+  50% { transform: translate(-3px, 1px) rotate(10deg); }
+}
+.rolling { animation: shakeRoll 0.2s infinite linear; }
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes revealFlip {
+  0% { transform: rotateY(0deg); background: #444; color: transparent; }
+  50% { transform: rotateY(90deg); background: #888; color: transparent; }
+  100% { transform: rotateY(180deg); background: var(--die-bg); color: var(--die-dot); }
+}
+.dice-cup .die.revealed { animation: revealFlip 0.6s forwards; }
+
+.section.player.active-turn { border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(0,0,0,0.5); }
+.section.opponent.thinking { border-color: rgba(255, 0, 0, 0.4); }
+
+/* --- Dark Souls Death Screen --- */
+.death-screen {
+  position: fixed; inset: 0; background: #000; z-index: 9999;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  opacity: 0; pointer-events: none; transition: opacity 3s ease-in;
+}
+.death-screen.active {
+  opacity: 1; pointer-events: auto;
+}
+.death-text {
+  color: #8b0000; font-family: var(--font-serif); font-size: 4vw;
+  text-transform: uppercase; letter-spacing: 0.5rem;
+  text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+  opacity: 0; transform: scale(0.9);
+  transition: opacity 2s ease-in 1.5s, transform 4s ease-out 1.5s;
+}
+.death-screen.active .death-text {
+  opacity: 1; transform: scale(1);
+}
+.btn-resurrect {
+  margin-top: 4rem; opacity: 0; transition: opacity 1s ease-in 4s;
+  background: transparent; border: 1px solid #444; color: #888;
+  font-size: 1.2rem; padding: 1rem 3rem; letter-spacing: 2px;
+}
+.death-screen.active .btn-resurrect { opacity: 1; }
+.btn-resurrect:hover { border-color: #8b0000; color: #8b0000; text-shadow: 0 0 5px red; box-shadow: inset 0 0 10px rgba(139,0,0,0.3); }

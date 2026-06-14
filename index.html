@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liar's Dice - The Speakeasy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="table-vignette"></div>
+
+  <div id="main-game" class="game-scene">
+    <header>
+      <h1>Liar's Dice</h1>
+      <p class="subtitle">Bank: <span id="bank-display" class="bank-amount">€200</span></p>
+    </header>
+    
+    <div id="comp-area" class="section opponent">
+      <div class="section-header">
+        <h2>Computer's Hand</h2>
+        <span class="dice-count">Dice Left: <span id="comp-count">5</span></span>
+      </div>
+      <div id="comp-dice" class="dice-cup"></div>
+    </div>
+
+    <div id="center-stage" class="center-stage">
+      <div class="bid-display">
+        <h3>Current Standing Bid</h3>
+        <div id="current-bid-display" class="bid-visual empty">
+          <span class="qty">--</span> <span class="times">×</span> <span class="face-val">[?]</span>
+        </div>
+      </div>
+      <p id="game-message">Roll the dice to begin.</p>
+    </div>
+
+    <div id="player-area" class="section player active-turn">
+      <div class="section-header">
+        <h2>Your Hand</h2>
+      </div>
+      <div id="player-dice" class="dice-hand"></div>
+    </div>
+
+    <div id="controls" class="control-panel">
+      <!-- New Wager Section -->
+      <div class="wager-section" id="wager-container">
+        <label>Wager</label>
+        <div class="wager-inputs">
+          <span class="currency">€</span>
+          <input type="number" id="wager-amount" min="10" max="200" step="10" value="10">
+          <button id="btn-soul" class="btn-soul">My Soul</button>
+        </div>
+      </div>
+
+      <div class="bid-inputs">
+        <div class="input-group">
+          <label>Quantity</label>
+          <input type="number" id="bid-qty" min="1" max="10" value="1">
+        </div>
+        
+        <div class="input-group">
+          <label>Face</label>
+          <select id="bid-face">
+            <option value="1">1s (Aces)</option>
+            <option value="2">2s</option>
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="btn-bid" class="btn-primary">Place Bid</button>
+        <button id="btn-liar" class="btn-danger" disabled>Call LIAR!</button>
+        <button id="btn-restart" class="btn-success" style="display:none;">Next Round</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark Souls Death Screen -->
+  <div id="death-screen" class="death-screen">
+    <h1 class="death-text">You really did bet your soul...</h1>
+    <button id="btn-resurrect" class="btn-resurrect">Resurrect</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
